@@ -43,7 +43,7 @@ export default function App() {
   if (!chatClient) return <LoadingIndicator />;
 
   return (
-    <Chat client={chatClient} theme="messaging light">
+    <Chat client={chatClient} theme="messaging dark">
       <ChannelList channel={channel} />
       <Channel>
         <Window>
