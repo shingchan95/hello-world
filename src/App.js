@@ -25,8 +25,8 @@ export default function App() {
       await chatClient.connectUser(user, chatClient.devToken(user.id));
 
       const channel = chatClient.channel('messaging', 'fl1-chat', {
-        name: 'FL1 Chat',
-        image: 'https://www.fl1digital.com/wp-content/themes/fl1-digital-2022/img/fl1-logo-icon.svg',
+        name: 'Hello World Chat',
+        image: '',
         members: ['dave', 'samjas'],
       });
 
