@@ -13,8 +13,8 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
+  mutation createUser($username: String!, $email: String!, $password: String!) {
+    createUser(username: $username, email: $email, password: $password) {
       token
       user {
         _id
@@ -24,12 +24,12 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_THOUGHT = gql`
-  mutation addThought($thoughtText: String!) {
-    addThought(thoughtText: $thoughtText) {
+export const ADD_POST = gql`
+  mutation addPost($postText: String!) {
+    addPost(postText: $postText) {
       _id
-      thoughtText
-      thoughtAuthor
+      postText
+      postAuthor
       createdAt
       comments {
         _id
@@ -40,11 +40,11 @@ export const ADD_THOUGHT = gql`
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($thoughtId: ID!, $commentText: String!) {
-    addComment(thoughtId: $thoughtId, commentText: $commentText) {
+  mutation addComment($postId: ID!, $commentText: String!) {
+    addComment(postId: $post, commentText: $commentText) {
       _id
-      thoughtText
-      thoughtAuthor
+      postText
+      postAuthor
       createdAt
       comments {
         _id
@@ -53,4 +53,37 @@ export const ADD_COMMENT = gql`
       }
     }
   }
+`
+
+export const REMOVE_POST = gql`
+  mutation removePost($postId: ID!) {
+    removePost(postId: $postId) {
+      _id
+      username
+      email
+      posts {
+        postText
+        postAuthor
+        createdAt
+        comments
+      }
+    }
+  }
+`
+export const REMOVE_COMMENT = gql`
+  mutation removeComment($postId: ID!, commentId: ID!) {
+    removeComment(postId: $postId, commentId: $commentId) {
+      _id
+      postText
+      postAuthor
+      createdAt
+      comments {
+        _id: 
+        commentText
+        commentAuthor
+        createdAt
+      }
+    }
+  }
+  
 `;

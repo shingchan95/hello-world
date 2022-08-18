@@ -4,25 +4,24 @@ const typeDefs = gql`
   type User {
     _id: ID!
     username: String!
-    displayname:String!
     email: String!
     password: String!
-    friends: [Friend]!
-    posts: [Post]!
+    friends: [Friend]
+    posts: [Post]
   }
 
   type Friend {
     _id: ID!
-    displayname: String
+    username: String
 
   }
 
   type Post {
     _id: ID!
     postText: String!
-    postAuthor: String!
+    postAuthor: String
     createdAt: String!
-    comments: [Comment]!
+    comments: [Comment]
   }
 
   type Comment {
@@ -40,22 +39,22 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [User]
     user(username: String!): User
-    posts(username: String): [Post]
-    post(postId: ID!): Post
+    getPosts(username: String): [Post]
+    getSinglePost(postId: ID!): Post
     me: User
+
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
     createUser(username: String!, email: String!, password: String!): Auth
-    addFriend(userId:ID! ): User
     addPost(postText: String!, postAuthor: String!): Post
     addComment(postId:ID!, commentText: String!, commentAuthor: String!): Post
     removePost(postId: ID!): Post
     removeComment(postId: ID!, commentId: ID!): Post
     removeFriend(userId: ID!): User
+    addFriend(userId:ID! ): User
   }
 `;
 
