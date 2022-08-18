@@ -22,16 +22,15 @@ const typeDefs = gql`
     postAuthor: String
     createdAt: String!
     comments: [Comment]
+
   }
 
   type Comment {
-    _id: ID!
+    _id: ID
     commentText: String
     commentAuthor: String
     createdAt: String
-
   }
-  
 
   type Auth {
     token: ID!
@@ -47,6 +46,7 @@ const typeDefs = gql`
   }
 
   type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
     createUser(username: String!, email: String!, password: String!): Auth
     addPost(postText: String!, postAuthor: String!): Post
@@ -55,6 +55,7 @@ const typeDefs = gql`
     removeComment(postId: ID!, commentId: ID!): Post
     removeFriend(userId: ID!): User
     addFriend(userId:ID! ): User
+
   }
 `;
 

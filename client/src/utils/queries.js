@@ -24,14 +24,20 @@ query user($username: String!) {
 
 export const QUERY_POSTS = gql`
   query getPosts {
-    thoughts {
+  query user($username: String!) {
+    user(username: $username) {
       _id
-      postText
-      postAuthor
-      createdAt
+      username
+      email
+      thoughts {
+        _id
+        thoughtText
+        createdAt
+      }
     }
   }
 `;
+
 
 export const QUERY_SINGLE_POST = gql`
   query getSinglePost($postId: ID!) {
