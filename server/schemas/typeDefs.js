@@ -4,43 +4,58 @@ const typeDefs = gql`
   type User {
     _id: ID!
     username: String!
-    email: String
-    bookCount: Int
-    savedBooks: [Book]
+    displayname:String!
+    email: String!
+    password: String!
+    friends: [Friend]!
+    posts: [Post]!
   }
 
-  type Book {
-    bookId: ID!
-    authors: [String]
-    description: String
-    image: String
-    link: String
-    title: String!
+  type Friend {
+    _id: ID!
+    displayname: String
+
   }
+
+  type Post {
+    _id: ID!
+    postText: String!
+    postAuthor: String!
+    createdAt: String!
+    comments: [Comment]!
+  }
+
+  type Comment {
+    _id: ID!
+    commentText: String
+    commentAuthor: String
+    createdAt: String
+
+  }
+  
 
   type Auth {
     token: ID!
     user: User
   }
 
-  input BookInput {
-    authors: [String]
-    description: String!
-    bookId: String!
-    image: String
-    link: String
-    title: String!
-  }
-
   type Query {
+    users: [User]
+    user(username: String!): User
+    posts(username: String): [Post]
+    post(postId: ID!): Post
     me: User
   }
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
-    saveBook(bookData: BookInput!): User
-    removeBook(bookId: ID!): User
+    createUser(username: String!, email: String!, password: String!): Auth
+    addFriend(userId:ID! ): User
+    addPost(postText: String!, postAuthor: String!): Post
+    addComment(postId:ID!, commentText: String!, commentAuthor: String!): Post
+    removePost(postId: ID!): Post
+    removeComment(postId: ID!, commentId: ID!): Post
+    removeFriend(userId: ID!): User
   }
 `;
 
