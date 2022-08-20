@@ -1,47 +1,17 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-query user($username: String!) {
-  user(username: $username) {
+{
+  users {
     _id
     username
     email
-    friends{
-      _id: ID!
-      username: String
-    }
-    posts {
-      _id
-      postText
-      createdAt
-    }
-  }
-}
-
-`;
-
-
-
-export const QUERY_POSTS = gql`
-  query getPosts {
-  query user($username: String!) {
-    user(username: $username) {
+    password
+    friends {
       _id
       username
-      email
-      thoughts {
-        _id
-        thoughtText
-        createdAt
-      }
     }
-  }
-`;
-
-
-export const QUERY_SINGLE_POST = gql`
-  query getSinglePost($postId: ID!) {
-    getSinglePost(postId: $postId) {
+    posts {
       _id
       postText
       postAuthor
@@ -54,7 +24,52 @@ export const QUERY_SINGLE_POST = gql`
       }
     }
   }
-`;
+}`;
+
+
+
+export const QUERY_POSTS = gql`
+  query getPosts ($username: String!) {
+    user(username: $username) {
+      _id
+      username
+      email
+      password
+      posts {
+        _id
+        postText
+        postAuthor
+        createdAt
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+        }
+      }
+      friends {
+        _id
+        username
+      }
+    }
+  }`;
+
+
+export const QUERY_SINGLE_POST = gql`
+  query getSinglePost ($postId: ID!) {
+    post(postId: $postId) {
+      _id
+      postText
+      postAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
+    }
+  }`;
 
 export const QUERY_ME = gql`
   query me {
@@ -62,12 +77,27 @@ export const QUERY_ME = gql`
       _id
       username
       email
+      password
+      friends {
+        _id
+        username
+      }
       posts {
         _id
-        postsText
-        postsAuthor
+        postText
+        postAuthor
         createdAt
+        comments {
+          _id
+          commentText
+          commentAuthor
+          createdAt
+        _id
+          commentText
+          commentAuthor
+          createdAt
+        }
       }
     }
   }
-`
+`;

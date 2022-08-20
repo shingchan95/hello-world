@@ -4,7 +4,6 @@ const typeDefs = gql`
   type User {
     _id: ID!
     username: String!
-    displayname:String!
     email: String!
     password: String!
     friends: [Friend]!
@@ -13,8 +12,7 @@ const typeDefs = gql`
 
   type Friend {
     _id: ID!
-    displayname: String
-
+    username: String!
   }
 
   type Post {

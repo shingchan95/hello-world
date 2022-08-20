@@ -25,8 +25,8 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_POST = gql`
-  mutation addPost($postText: String!) {
-    addPost(postText: $postText) {
+  mutation addPost ($postText: String!, $postAuthor: String!) {
+    addPost(postText: $postText, postAuthor: $postAuthor) {
       _id
       postText
       postAuthor
@@ -34,14 +34,16 @@ export const ADD_POST = gql`
       comments {
         _id
         commentText
+        commentAuthor
+        createdAt
       }
     }
   }
 `;
 
 export const ADD_COMMENT = gql`
-  mutation addComment($postId: ID!, $commentText: String!) {
-    addComment(postId: $post, commentText: $commentText) {
+  mutation addComment ($postId: ID!, $commentText: String!, $commentAuthor: String!) {
+    addComment(postId: $postId, commentText: $commentText, commentAuthor: $commentAuthor) {
       _id
       postText
       postAuthor
@@ -49,6 +51,7 @@ export const ADD_COMMENT = gql`
       comments {
         _id
         commentText
+        commentAuthor
         createdAt
       }
     }
@@ -59,13 +62,14 @@ export const REMOVE_POST = gql`
   mutation removePost($postId: ID!) {
     removePost(postId: $postId) {
       _id
-      username
-      email
-      posts {
-        postText
-        postAuthor
+      postText
+      postAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        commentAuthor
         createdAt
-        comments
       }
     }
   }
@@ -78,12 +82,11 @@ export const REMOVE_COMMENT = gql`
       postAuthor
       createdAt
       comments {
-        _id: 
+        _id
         commentText
         commentAuthor
         createdAt
       }
     }
   }
-  
 `;
