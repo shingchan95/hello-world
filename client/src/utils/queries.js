@@ -71,13 +71,19 @@ query Me {
     friends {
       _id
       username
-    }
+}
     posts {
       _id
       postText
       postAuthor
       createdAt
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
     }
   }
-}
-`;
+}`;
+
