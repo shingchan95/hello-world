@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import SearchBar from '../SearchBar'
 import Auth from '../../utils/auth';
 
 const Header = () => {
@@ -13,19 +13,24 @@ const Header = () => {
       <div className="container flex-row justify-space-between-lg justify-center align-center">
         <div>
           <Link className="text-light" to="/">
-            <h1 className="m-0">Posts</h1>
+            <h1 className="m-0">Hellow World</h1>
           </Link>
-          <p className="m-0">Post.</p>
         </div>
         <div>
+            <div>
+              <SearchBar placeholder="search for friends" />
+            </div>
           {Auth.loggedIn() ? (
             <>
+            
+            <div>
               <Link className="btn btn-lg btn-info m-2" to="/me">
                 {Auth.getProfile().data.username}'s profile
               </Link>
               <button className="btn btn-lg btn-light m-2" onClick={logout}>
                 Logout
               </button>
+            </div>
             </>
           ) : (
             <>
