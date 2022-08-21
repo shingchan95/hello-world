@@ -43,6 +43,7 @@ const PostForm = () => {
           postText,
           postAuthor: Auth.getProfile().data.username,
         },
+
       });
 
       setPostText('');

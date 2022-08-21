@@ -6,13 +6,8 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    friends: [Friend]
+    friends: [User]
     posts: [Post]
-  }
-
-  type Friend {
-    _id: ID!
-    username: String!
   }
 
   type Post {

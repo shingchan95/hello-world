@@ -6,22 +6,9 @@ query Post($username: String!) {
     _id
     username
     email
-    password
     friends {
       _id
       username
-    }
-    posts {
-      _id
-      postText
-      postAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        commentAuthor
-        createdAt
-      }
     }
   }
 }`;
@@ -29,8 +16,8 @@ query Post($username: String!) {
 
 
 export const QUERY_POSTS = gql`
-  query Post($postId: ID!) {
-    post(postId: $postId) {
+  query Posts($postId: ID!) {
+    posts(postId: $postId) {
       _id
       postText
       postAuthor
@@ -46,8 +33,8 @@ export const QUERY_POSTS = gql`
 
 
 export const QUERY_SINGLE_POST = gql`
-query Post($postId: ID!) {
-  post(postId: $postId) {
+query Posts($postId: ID!) {
+  posts(postId: $postId) {
     _id
     postText
     postAuthor
@@ -69,9 +56,19 @@ query Me {
     email
     password
     friends {
+<<<<<<< HEAD
       _id
       username
 }
+=======
+      posts {
+        _id
+        postText
+        postAuthor
+        createdAt
+      }
+    }
+>>>>>>> 28bec4550879a15847465c870836d5b849c73909
     posts {
       _id
       postText
