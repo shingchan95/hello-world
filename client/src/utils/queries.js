@@ -6,9 +6,22 @@ query Post($username: String!) {
     _id
     username
     email
+    password
     friends {
       _id
       username
+    }
+    posts {
+      _id
+      postText
+      postAuthor
+      createdAt
+      comments {
+        _id
+        commentText
+        commentAuthor
+        createdAt
+      }
     }
   }
 }`;
@@ -16,8 +29,8 @@ query Post($username: String!) {
 
 
 export const QUERY_POSTS = gql`
-  query Posts($postId: ID!) {
-    posts(postId: $postId) {
+  query Post($postId: ID!) {
+    post(postId: $postId) {
       _id
       postText
       postAuthor
@@ -33,8 +46,8 @@ export const QUERY_POSTS = gql`
 
 
 export const QUERY_SINGLE_POST = gql`
-query Posts($postId: ID!) {
-  posts(postId: $postId) {
+query Post($postId: ID!) {
+  post(postId: $postId) {
     _id
     postText
     postAuthor
@@ -57,6 +70,7 @@ query Me {
     password
     friends {
 <<<<<<< HEAD
+<<<<<<< HEAD
       _id
       username
 }
@@ -67,6 +81,10 @@ query Me {
         postAuthor
         createdAt
       }
+=======
+      _id
+      username
+>>>>>>> parent of 28bec45 (update on comment list)
     }
 >>>>>>> 28bec4550879a15847465c870836d5b849c73909
     posts {
@@ -74,12 +92,6 @@ query Me {
       postText
       postAuthor
       createdAt
-      comments {
-        _id
-        commentText
-        commentAuthor
-        createdAt
-      }
     }
   }
 }`;

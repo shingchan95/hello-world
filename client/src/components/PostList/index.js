@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import CommentForm from '../CommentForm';
-import CommentList from '../CommentList';
 
 const PostList = ({
   posts,
@@ -12,7 +10,6 @@ const PostList = ({
   if (!posts.length) {
     return <h3>No Posts Yet</h3>;
   }
-  console.log(posts)
 
   return (
     <div>
@@ -42,12 +39,12 @@ const PostList = ({
             <div className="card-body bg-light p-2">
               <p>{post.postText}</p>
             </div>
-            <CommentList comments={post.comments} />
-            <CommentForm
+            <Link
               className="btn btn-primary btn-block btn-squared"
-              postId={post._id}
-              />
-          
+              to={`/posts/${post._id}`}
+            >
+              Join the discussion on this post.
+            </Link>
           </div>
         ))}
     </div>
