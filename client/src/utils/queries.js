@@ -73,7 +73,6 @@ query Me {
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-<<<<<<< HEAD
       _id
       username
 }
@@ -84,10 +83,6 @@ query Me {
         postAuthor
         createdAt
       }
-=======
-      _id
-      username
->>>>>>> parent of 28bec45 (update on comment list)
 =======
       _id
       username
