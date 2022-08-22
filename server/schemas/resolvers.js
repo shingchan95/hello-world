@@ -56,6 +56,11 @@ const resolvers = {
           { $push: {friends: {_id: userId, username: username, email: email} } },
           { new: true }
         );
+        const friend2= await User.findByIdAndUpdate(
+          { _id: userId },
+          { $push: {friends: {_id: context.user._id, username: context.user.username, email: context.user.email} } },
+          { new: true }
+        );
         return friend;
       }
       throw new AuthenticationError('You need to be logged in!');
