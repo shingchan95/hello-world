@@ -9,10 +9,11 @@ const PostList = ({
   showTitle = true,
   showUsername = true,
 }) => {
+
   if (!posts.length) {
     return <h3>No Posts Yet</h3>;
   }
-  console.log(posts)
+
 
   return (
     <div>

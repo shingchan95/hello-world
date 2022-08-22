@@ -17,11 +17,11 @@ const Header = () => {
           </Link>
         </div>
         <div>
-            <div>
-              <SearchBar placeholder="search for friends" />
-            </div>
           {Auth.loggedIn() ? (
             <>
+            <div>
+            <SearchBar/>
+            </div>
             
             <div>
               <Link className="btn btn-lg btn-info m-2" to="/me">

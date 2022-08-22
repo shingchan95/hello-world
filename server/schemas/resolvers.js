@@ -5,7 +5,7 @@ const { signToken } = require('../utils/auth');
 const resolvers = {
   Query: {
     users: async () => {
-      return User.find().populate('posts');
+      return User.find().populate('posts').populate('friends');
     },
     user: async (parent, { username }) => {
       return User.findOne({ username }).populate('posts').populate('friends');
@@ -49,12 +49,14 @@ const resolvers = {
       return { token, user };
     },
 
-    addFriend: async (parent, { userId }, context) => {
+    addFriend: async (parent, {userId }, context) => {
       if (context.user) {
-        await User.findOneAndUpdate(
+        const friend= await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { friends: userId } }
+          { $push: {friends: {userId} } },
+          { new: true }
         );
+        return friend;
       }
       throw new AuthenticationError('You need to be logged in!');
     },

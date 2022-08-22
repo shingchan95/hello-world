@@ -1,12 +1,9 @@
 import React from 'react';
 import { Navigate, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-
-import PostForm from '../components/PostForm';
-import PostList from '../components/PostList';
+import { useQuery, useMutation  } from '@apollo/client';
 
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
-
+import { ADD_FRIEND } from '../utils/mutations'
 import Auth from '../utils/auth';
 
 const Profile = () => {
@@ -15,9 +12,31 @@ const Profile = () => {
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-
   const user = data?.me || data?.user || {};
+  const userId = user._id
 
+  
+  const [addFriend, { error}] = useMutation(ADD_FRIEND);
+
+  const handleAddFriend = async () => {
+    
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+    if (!token) {
+      return false;
+    }
+    
+    try {
+      const { data } = await addFriend({
+        variables: { userId}
+      });
+
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  console.log(userId)
 
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
@@ -28,40 +47,34 @@ const Profile = () => {
     return <div>Loading...</div>;
   }
 
-  if (!user?.username) {
-    return (
-      <h4>
-        You need to be logged in to see this. Use the navigation links above to
-        sign up or log in!
-      </h4>
-    );
-  }
 
   return (
-    // <div>
-    //    <PostForm />
-    //   <div className="flex-row justify-center mb-3">
-        <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          {`${user.username}'s`} profile.
-        </h2> 
+    <>
+      <div>
+          <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
+            {`${user.username}'s`} profile.
+          </h2>
+      </div>
+      <div>
+        <h3>Friend List</h3>
+        {user.friends.map((value, key)=> {
+          return <p> {value.username}</p>
+        })
+        }  
+      </div>
+      <div>
+        Email: {user.email}
+      </div>
 
-    //     {/* <div className="col-12 col-md-10 mb-5">
-    //       <PostList
-    //         posts={user.posts}
-    //         title={`${user.username}'s posts...`}
-    //         showTitle={false}
-    //         showUsername={false}
-    //       />
-    //     </div>
-    //     {!userParam && (
-    //       <div
-    //         className="col-12 col-md-10 mb-3 p-3"
-    //         style={{ border: '1px dotted #1a1a1a' }}
-    //       >
-    //       </div>
-    //     )}
-    //   </div>
-    // </div> */}
+      {Auth.getProfile().data.username !== user.username && (
+        <div>
+          <button className="btn btn-lg btn-light m-2" onClick={handleAddFriend}>
+          Add User
+          </button>
+        </div>
+      )}
+    </>
+        
   );
 };
 
