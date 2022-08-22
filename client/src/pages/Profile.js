@@ -30,7 +30,7 @@ const Profile = () => {
       const { data } = await addFriend({
         variables: { userId}
       });
-
+      console.log(data)
     } catch (e) {
       console.error(e);
     }
