@@ -49,11 +49,11 @@ const resolvers = {
       return { token, user };
     },
 
-    addFriend: async (parent, {userId }, context) => {
+    addFriend: async (parent, {userId, username, email }, context) => {
       if (context.user) {
         const friend= await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: {friends: {userId} } },
+          { $push: {friends: {_id: userId, username: username, email: email} } },
           { new: true }
         );
         return friend;

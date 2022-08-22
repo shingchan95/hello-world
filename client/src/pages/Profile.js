@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation  } from '@apollo/client';
 
@@ -14,8 +14,10 @@ const Profile = () => {
   });
   const user = data?.me || data?.user || {};
   const userId = user._id
+  const email= user.email
+  const username= user.username
 
-  
+
   const [addFriend, { error}] = useMutation(ADD_FRIEND);
 
   const handleAddFriend = async () => {
@@ -28,7 +30,7 @@ const Profile = () => {
     
     try {
       const { data } = await addFriend({
-        variables: { userId}
+        variables: {userId, email, username }
       });
       console.log(data)
     } catch (e) {
@@ -36,7 +38,16 @@ const Profile = () => {
     }
   }
 
-  console.log(userId)
+
+  // function UpdateFriendList() {
+  //   const [friends, setFriends] = useState([]);
+  //   const friendList= user.friends.map((value) => value.username)
+
+  //   setFriends(...friendList)
+  //   console.log(friends)                   
+  // }
+
+
 
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
@@ -65,12 +76,16 @@ const Profile = () => {
       <div>
         Email: {user.email}
       </div>
+      {/* <button className="btn btn-lg btn-light m-2" onClick={UpdateFriendList}>
+          Check friends
+          </button> */}
 
       {Auth.getProfile().data.username !== user.username && (
         <div>
           <button className="btn btn-lg btn-light m-2" onClick={handleAddFriend}>
           Add User
           </button>
+       
         </div>
       )}
     </>

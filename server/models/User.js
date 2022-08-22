@@ -25,14 +25,7 @@ const userSchema = new Schema({
       ref: 'Post',
     },
   ],
-  friends: [
-    {
-      displayname: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  friends: [this],
 
 });
 

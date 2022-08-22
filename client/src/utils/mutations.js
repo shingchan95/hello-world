@@ -52,12 +52,15 @@ mutation AddComment($postId: ID!, $commentText: String!, $commentAuthor: String!
 }
 `
 export const ADD_FRIEND = gql`
-mutation Mutation($userId: ID!) {
-  addFriend(userId: $userId) {
-    username
+mutation AddFriend($userId: ID!, $email: String, $username: String) {
+  addFriend(userId: $userId, email: $email, username: $username) {
     posts {
       postText
       createdAt
+    }
+    friends {
+      username
+      email
     }
   }
 }`;

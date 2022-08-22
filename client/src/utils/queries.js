@@ -7,6 +7,7 @@ export const QUERY_USER = gql`
       username
       email
       friends {
+        _id
         username
       }
     }
@@ -18,6 +19,7 @@ export const QUERY_ALL_USER = gql`
       username
       email
       friends {
+        _id
         username
       }
     }
@@ -59,19 +61,15 @@ query Posts($postId: ID!) {
 }`;
 
 export const QUERY_ME = gql`
-query Query {
+query Me {
   me {
     _id
     username
     email
     friends {
+      _id
       username
-      posts {
-        _id
-        postText
-        postAuthor
-        createdAt
-      }
+      email
     }
     posts {
       _id
