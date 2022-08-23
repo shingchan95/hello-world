@@ -10,12 +10,12 @@
     border-bottom-right-radius: 0px;
     font-size: 18px;
     padding: 15px;
-    height: 30px;
+    height: 50px;
     width: 300px;
   }
 
   .searchIcon {
-    height: 60px;
+    height: 80px;
     width: 50px;
     background-color: white;
     display: grid;
