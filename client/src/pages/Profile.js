@@ -1,59 +1,55 @@
 import React, { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation  } from '@apollo/client';
-
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import { ADD_FRIEND } from '../utils/mutations'
 import Auth from '../utils/auth';
+import PostForm from '../components/PostForm';
+import PostList from '../components/PostList';
+import FriendList from '../components/FriendList';
+
 
 const Profile = () => {
   const { username: userParam } = useParams();
-
   const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-  const user = data?.me || data?.user || {};
-  const userId = user._id
-  const email= user.email
-  const username= user.username
 
+  function QueryMultiple (){
+
+    const userData= useQuery(QUERY_USER);
+    const meData = useQuery(QUERY_ME)
+
+    return [userData, meData]
+  }
+
+  QueryMultiple()
 
   const [addFriend, { error}] = useMutation(ADD_FRIEND);
-
+  const user = data?.me || data?.user || {};
+  const userId = user._id
+  
   const handleAddFriend = async () => {
-    
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
+
 
     if (!token) {
       return false;
     }
-    
+  
     try {
       const { data } = await addFriend({
-        variables: {userId, email, username }
+        variables: {userId}
       });
-      console.log(data)
+      // user.friends.push(data)
     } catch (e) {
       console.error(e);
     }
   }
-
-
-  // function UpdateFriendList() {
-  //   const [friends, setFriends] = useState([]);
-  //   const friendList= user.friends.map((value) => value.username)
-
-  //   setFriends(...friendList)
-  //   console.log(friends)                   
-  // }
-
-
-
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
   }
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -66,30 +62,40 @@ const Profile = () => {
             {`${user.username}'s`} profile.
           </h2>
       </div>
-      <div>
-        <h3>Friend List</h3>
-        {user.friends.map((value, key)=> {
-          return <p> {value.username}</p>
-        })
-        }  
-      </div>
-      <div>
-        Email: {user.email}
-      </div>
-      {/* <button className="btn btn-lg btn-light m-2" onClick={UpdateFriendList}>
-          Check friends
-          </button> */}
-
       {Auth.getProfile().data.username !== user.username && (
         <div>
           <button className="btn btn-lg btn-light m-2" onClick={handleAddFriend}>
-          Add User
+          Connect User
           </button>
-       
         </div>
       )}
+      
+      <div>
+        <FriendList users={user.friends} />
+      </div>
+      
+      <div>
+        Contact Email: {user.email}
+      </div>
+      {Auth.getProfile().data.username === user.username && (
+        <div>
+          <PostForm />
+        </div>
+        )}
+
+      <div className="col-12 col-md-10 mb-5">
+        <PostList
+          posts={user.posts}
+          title={`${user.username}'s posts...`}
+          username={user.username}
+          showTitle={false}
+          showUsername={false}
+        />
+      </div>
+    
+
+
     </>
-        
   );
 };
 

@@ -1,17 +1,31 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-  query User($username: String!) {
-    user(username: $username) {
+query Query($username: String!) {
+  user(username: $username) {
+    _id
+    username
+    email
+    friends {
       _id
       username
-      email
-      friends {
-        _id
-        username
+      posts {
+        postText
+        createdAt
       }
     }
-  }`;
+    posts {
+      _id
+      postText
+      createdAt
+      comments {
+        commentText
+        createdAt
+        commentAuthor
+      }
+    }
+  }
+}`;
 
 export const QUERY_ALL_USER = gql`
   query Users {
@@ -61,15 +75,17 @@ query Posts($postId: ID!) {
 }`;
 
 export const QUERY_ME = gql`
-query Me {
+query Query {
   me {
-    _id
     username
     email
     friends {
-      _id
       username
       email
+      posts {
+        postText
+        createdAt
+      }
     }
     posts {
       _id
@@ -77,7 +93,6 @@ query Me {
       postAuthor
       createdAt
       comments {
-        _id
         commentText
         commentAuthor
         createdAt

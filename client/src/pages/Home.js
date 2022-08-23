@@ -42,11 +42,6 @@ const Home = () => {
   return (
     <div>
        <PostForm />
-      <div className="flex-row justify-center mb-3">
-        {/* <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-        </h2> */}
-
         <div className="col-12 col-md-10 mb-5">
           <PostList
             posts={user.posts}
@@ -55,8 +50,6 @@ const Home = () => {
             showUsername={false}
           />
         </div>
-    
-      </div>
     </div>
   );
 };

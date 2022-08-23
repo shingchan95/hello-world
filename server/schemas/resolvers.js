@@ -49,16 +49,19 @@ const resolvers = {
       return { token, user };
     },
 
-    addFriend: async (parent, {userId, username, email }, context) => {
+    addFriend: async (parent, {userId}, context) => {
       if (context.user) {
         const friend= await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: {friends: {_id: userId, username: username, email: email} } },
+          { $push: {friends: {_id: userId} } },
           { new: true }
         );
+        
+        // const friends2= User.findOne({ _id: userId }).populate('posts').populate('friends');
+        // console.log(friends2)
         const friend2= await User.findByIdAndUpdate(
           { _id: userId },
-          { $push: {friends: {_id: context.user._id, username: context.user.username, email: context.user.email} } },
+          { $push: {friends: {_id: context.user._id} } },
           { new: true }
         );
         return friend;

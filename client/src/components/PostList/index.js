@@ -6,6 +6,7 @@ import CommentList from '../CommentList';
 const PostList = ({
   posts,
   title,
+  username,
   showTitle = true,
   showUsername = true,
 }) => {
@@ -35,7 +36,7 @@ const PostList = ({
               ) : (
                 <>
                   <span style={{ fontSize: '1rem' }}>
-                    You posted on {post.createdAt}
+                    {username} posted on {post.createdAt}
                   </span>
                 </>
               )}
