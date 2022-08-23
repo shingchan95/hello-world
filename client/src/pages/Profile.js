@@ -15,15 +15,15 @@ const Profile = () => {
     variables: { username: userParam },
   });
 
-  function QueryMultiple (){
+  // function QueryMultiple (){
 
-    const userData= useQuery(QUERY_USER);
-    const meData = useQuery(QUERY_ME)
+  //   const userData= useQuery(QUERY_USER);
+  //   const meData = useQuery(QUERY_ME)
 
-    return [userData, meData]
-  }
+  //   return [userData, meData]
+  // }
 
-  QueryMultiple()
+  // QueryMultiple()
 
   const [addFriend, { error}] = useMutation(ADD_FRIEND);
   const user = data?.me || data?.user || {};
