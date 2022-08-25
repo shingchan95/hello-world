@@ -83,6 +83,7 @@ query Query {
       username
       email
       posts {
+        _id
         postText
         createdAt
       }

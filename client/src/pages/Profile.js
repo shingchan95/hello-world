@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation  } from '@apollo/client';
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
@@ -11,36 +11,64 @@ import FriendList from '../components/FriendList';
 
 const Profile = () => {
   const { username: userParam } = useParams();
-  const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
+  
+  const [addFriend, { error}] = useMutation(ADD_FRIEND);
+  const {  data, loading, refetch  } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
-
-  // function QueryMultiple (){
-
-  //   const userData= useQuery(QUERY_USER);
-  //   const meData = useQuery(QUERY_ME)
-
-  //   return [userData, meData]
-  // }
-
-  // QueryMultiple()
-
-  const [addFriend, { error}] = useMutation(ADD_FRIEND);
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
   const user = data?.me || data?.user || {};
   const userId = user._id
+  const userFriend = user.friends
+  const [friendlist, setFriendList]= useState()
+  const [filteredName, setFilteredName]= useState()
+  const profileName= Auth.getProfile().data.username
+
+  useEffect(() => {
+    handleFriendlist();
+    refetch()
+  },[data])
+
+  useEffect(() => {
+    handleFilter();
+  },[data])
+ 
+  const handleFriendlist =() =>{
+    setFriendList(userFriend)
+  }
   
+  const profileFriend= user.friends || []
+
+  const filterName= Auth.getProfile().data.username
+
+  console.log(profileFriend)
+  console.log(filterName)
+
+
+  
+  const handleFilter = () => {
+  
+    const filtered = profileFriend.filter(profileFriends => {
+        return profileFriends.username === filterName
+      })
+      if(filtered.length ===0){
+        setFilteredName("")
+      }else{
+        setFilteredName(filtered);
+      }
+      console.log(filteredName)
+    }
+
+
   const handleAddFriend = async () => {
-  const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-
     if (!token) {
       return false;
     }
-  
     try {
       const { data } = await addFriend({
         variables: {userId}
       });
+      refetch()
       // user.friends.push(data)
     } catch (e) {
       console.error(e);
@@ -49,6 +77,7 @@ const Profile = () => {
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
+    
   }
   if (loading) {
     return <div>Loading...</div>;
@@ -63,15 +92,34 @@ const Profile = () => {
           </h2>
       </div>
       {Auth.getProfile().data.username !== user.username && (
+      <div>
+
         <div>
-          <button className="btn btn-lg btn-light m-2" onClick={handleAddFriend}>
-          Connect User
-          </button>
+
+        {filteredName.length===0 ? 
+         <div>
+            <button className="btn btn-lg btn-light m-2" onClick={()=>{handleAddFriend();handleFilter()}}>
+                Connect User
+            </button>
         </div>
+        :
+        <div> 
+            <button className="btn btn-lg btn-light m-2">
+                    Connected
+            </button>
+        </div>  
+        
+        }
+        
+        </div>
+        
+        
+       
+      </div>
       )}
       
       <div>
-        <FriendList users={user.friends} />
+        <FriendList users={friendlist} />
       </div>
       
       <div>
@@ -92,9 +140,6 @@ const Profile = () => {
           showUsername={false}
         />
       </div>
-    
-
-
     </>
   );
 };

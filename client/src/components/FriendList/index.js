@@ -1,8 +1,7 @@
 import React from 'react';
 
 const FriendList = ({ users }) =>{
-
-    if (!users.length) {
+    if (!users) {
         return <h3>No Friends Yet</h3>;
       }
       return (
@@ -11,9 +10,11 @@ const FriendList = ({ users }) =>{
           <div className="justify-space-between my-4">
 
             {users &&
-              users.map((user, key) =>(                
-                  <p> {user.username}</p>
-                  ))}
+              users.map((user, key) =>(     
+                <div key={key}> 
+                <p> {user.username}</p>
+                </div>         
+                ))}
             
           </div>
         </div>

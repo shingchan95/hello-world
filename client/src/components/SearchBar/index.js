@@ -16,6 +16,8 @@ const SearchBar = () =>{
         const newFilter = users.filter((value)=> {
             return value.username.toLowerCase().includes(searchWord.toLowerCase());
         });
+        console.log(newFilter)
+        console.log(searchWord)
 
         if(searchWord === ""){
             setFilteredData([])
@@ -37,7 +39,7 @@ const SearchBar = () =>{
                     <div className='dataResult'>
                         {filteredData.slice(0, 15).map((value, key) => {           
                             return (
-                                <Link className="dataItem" to={`/profiles/${value.username}` }>
+                                <Link className="dataItem" key={key} to={`/profiles/${value.username}` }>
                         <p>{value.username}</p>
                         </Link>
                         )
