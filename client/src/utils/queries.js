@@ -70,6 +70,11 @@ query Me {
       _id
       username
       email
+      posts {
+        _id
+        postText
+        createdAt
+      }
     }
     posts {
       _id
