@@ -11,15 +11,18 @@
     font-size: 18px;
     padding: 15px;
     height: 50px;
-    width: 300px;
+    width: 325px;
   }
 
   .searchIcon {
     height: 80px;
     width: 50px;
-    background-color: white;
+    background-color: pink;
     display: grid;
     place-items: center;
+  }
+  .searchIcon:hover {
+    background-color: #87CEEB;
   }
 
   input:focus {

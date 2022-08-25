@@ -895,7 +895,7 @@ a:hover {
 }
 
 .text-light {
-  color: #d9e9e8 !important;
+  color: whitesmoke !important;
 }
 
 .text-dark {
@@ -916,7 +916,7 @@ a:hover {
 
 /* BACKGROUND UTILS */
 .bg-primary {
-  background-color: #2d3e50 !important;
+  background-color: grey !important;
 }
 
 .bg-info {
@@ -932,7 +932,14 @@ a:hover {
 }
 
 .bg-dark {
-  background-color: #1a1a1a !important;
+  border-radius: 5px;
+  background-color: #87CEEB !important;
+  width: 93%;
+  
+}
+.divA {
+ width: 100%;
+ margin-left: 20px;
 }
 
 .bg-white {
@@ -1008,12 +1015,15 @@ a:hover {
 }
 
 .btn.btn-primary {
-  background-color: #2d3e50;
+  background-color: #87CEEB;
   color: #d9e9e8;
+  margin: 10px;
+  position: relative;
+  right : 10px;
 }
 
 .btn.btn-primary:hover {
-  background-color: #57779a;
+  background-color: pink;
 }
 
 .btn.btn-danger {
@@ -1026,31 +1036,33 @@ a:hover {
 }
 
 .btn.btn-info {
-  background-color: #1bbc9b;
+  background-color:pink;
   color: #ffffff;
+  position: relative;
+  right: 10px;
 }
 
 .btn.btn-info:hover {
-  background-color: #31e1bd;
+  background-color: #87CEEB;
 }
 
 .btn.btn-light {
-  background-color: #d9e9e8;
-  color: #1a1a1a;
+  background-color: #87CEEB;
+  color: white;
 }
 
 .btn.btn-light:hover {
-  background-color: #84b8b4;
+  background-color: pink;
 }
 
 .btn.btn-dark {
-  background-color: #1a1a1a;
+  background-color: grey;
   color: #d9e9e8;
 }
 
 .btn.btn-dark:hover {
-  background-color: #5f5f5f;
-}
+  background-color: pink;
+}#5f5f5f
 
 .btn.btn-white {
   background-color: #ffffff;
@@ -1080,18 +1092,23 @@ a:hover {
 }
 
 .card {
-  border: 1px solid #1a1a1a;
+  width: 100%;
+  border: 2.5px solid grey;
+  border-radius: 5px;
   margin-bottom: 1rem;
 }
 
 .card .card-header {
-  padding: 0.375rem;
+  border-radius: 5px;
   background-color: #2d3e50;
-  color: #d9e9e8;
+  color:grey;
+  padding: 2px; ;
 }
 
 .card .card-body {
-  padding: 0.375rem;
+  border-radius: 5px;
+  
+  
 }
 
 .card .card-footer {
@@ -1109,12 +1126,14 @@ a:hover {
 
 form {
   width: 100%;
+  
 }
 
 form .form-group {
   display: block;
   width: 100%;
-  margin: 0.625rem 0;
+  
+  
 }
 
 form .form-input,
@@ -1150,7 +1169,7 @@ form .form-input {
 }
 
 form .form-input.form-input-squared {
-  border-radius: 0;
+  border-radius: 5px;
 }
 
 form [type='checkbox'],
@@ -1168,6 +1187,7 @@ label form [type='radio'] {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  position: relative;
 }
 
 .container.container-fluid {
