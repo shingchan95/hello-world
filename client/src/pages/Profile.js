@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useQuery, useMutation  } from '@apollo/client';
-
 import { QUERY_USER, QUERY_ME } from '../utils/queries';
 import { ADD_FRIEND } from '../utils/mutations'
 import Auth from '../utils/auth';
+// import PostForm from '../components/PostForm';
+import PostList from '../components/PostList';
+import FriendList from '../components/FriendList';
+import '../styles/profile.css';
 
 const Profile = () => {
   const { username: userParam } = useParams();
   
-  const [addFriend, { error}] = useMutation(ADD_FRIEND);
+  const [addFriend] = useMutation(ADD_FRIEND);
   const {  data, loading, refetch  } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
     variables: { username: userParam },
   });
@@ -19,7 +22,7 @@ const Profile = () => {
   const userFriend = user.friends
   const [friendlist, setFriendList]= useState()
   const [filteredName, setFilteredName]= useState()
-  const profileName= Auth.getProfile().data.username
+  // const profileName= Auth.getProfile().data.username
 
   useEffect(() => {
     handleFriendlist();
@@ -63,7 +66,7 @@ const Profile = () => {
     }
     try {
       const { data } = await addFriend({
-        variables: {userId, email, username }
+        variables: {userId}
       });
       refetch()
       // user.friends.push(data)
@@ -71,24 +74,11 @@ const Profile = () => {
       console.error(e);
     }
   }
-
-
-  // function UpdateFriendList() {
-  //   const [friends, setFriends] = useState([]);
-  //   const friendList= user.friends.map((value) => value.username)
-
-  //   setFriends(...friendList)
-  //   console.log(friends)                   
-  // }
-
-
-
   // navigate to personal profile page if username is yours
   if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
     return <Navigate to="/me" />;
     
   }
-
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -96,76 +86,90 @@ const Profile = () => {
 
   return (
     <>
+    <div>
       <div>
-          <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
+          <h2 className="col-12 col-md-10 bg-dark p-3 mb-5">
             {`${user.username}'s`} profile.
           </h2>
       </div>
-      <div>
-        <h3>Friend List</h3>
-        {user.friends.map((value, key)=> {
-          return <p> {value.username}</p>
-        })
-        }  
-      </div>
-      <div>
-        Email: {user.email}
-      </div>
-      {/* <button className="btn btn-lg btn-light m-2" onClick={UpdateFriendList}>
-          Check friends
-          </button> */}
-
       {Auth.getProfile().data.username !== user.username && (
-      <div>
-
-        <div>
-
+        <>
+        
         {filteredName.length===0 ? 
-         <div>
+          <div>
+            <h2>connect to see the profile</h2>
             <button className="btn btn-lg btn-light m-2" onClick={()=>{handleAddFriend();handleFilter()}}>
                 Connect User
             </button>
-        </div>
+          </div>
         :
-        <div> 
+        <>
+        {/* <div className='container flex-row justify-space-between-lg justify-center align-center'> 
             <button className="btn btn-lg btn-light m-2">
-                    Connected
+              Connected
             </button>
-        </div>  
-        
-        }
-        
-        </div>
-        
-        
-       
-      </div>
-      )}
-      
-      <div>
-        <FriendList users={friendlist} />
-      </div>
-      
-      <div>
-        Contact Email: {user.email}
-      </div>
-      {Auth.getProfile().data.username === user.username && (
-        <div>
-          <PostForm />
-        </div>
+            <span>
+              <p>
+                Contact Email: {user.email}
+              </p>
+            </span>
+          </div> */}
+          
+          <div className='pt-2'>
+            <FriendList users={friendlist} />
+          </div>
+          
+          <div className='profilePost'> 
+            <button className="btn btn-lg btn-light mb-2 ml-3">
+              Connected
+            </button>
+            <div className="col-12 col-md-10 mb-5">
+              <PostList
+                posts={user.posts}
+                title={`${user.username}'s posts...`}
+                username={user.username}
+                showTitle={false}
+                showUsername={false}
+                />
+            </div>
+          </div>
+
+          </>
+          }
+        </>
+        )}
+        {Auth.getProfile().data.username === user.username && (
+          <div>
+            <div className='pb-2'>
+              Contact Email: {user.email}
+            </div>
+            <div>
+              <FriendList users={friendlist} />
+            </div>
+            <div className='profilePost'> 
+            {/* {Auth.getProfile().data.username === user.username && (
+              <div>
+                <PostForm />
+                </div>
+              )} */}
+                <div className="col-12 col-md-10 mb-5">
+                  <PostList
+                    posts={user.posts}
+                    title={`${user.username}'s posts...`}
+                    username={user.username}
+                    showTitle={false}
+                    showUsername={false}
+                    />
+                </div>
+              </div>
+            </div>
         )}
 
-      <div className="col-12 col-md-10 mb-5">
-        <PostList
-          posts={user.posts}
-          title={`${user.username}'s posts...`}
-          username={user.username}
-          showTitle={false}
-          showUsername={false}
-        />
       </div>
+      
+      
+    
     </>
-        
   );
 };
 

@@ -1,0 +1,58 @@
+.welcome-dot {
+    width: 1000px;
+    height: 1000px;
+    position: absolute;
+    /* top: 50%;   */
+    /* left: 50%;  */
+    /* margin-left: auto;
+    margin-right: auto; */
+    /* text-align: center; */
+    background-color: rgb(199, 142, 194);
+    animation-name: stretch;
+    animation-duration: 2.3s; 
+    animation-timing-function: ease-out; 
+    animation-delay: 0;
+    animation-direction: alternate;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+    animation-play-state: running;
+  }
+  
+  @keyframes stretch {
+    0% {
+      transform: scale(2);
+      background-color: rgb(221, 162, 216);
+      border-radius: 100%;
+    }
+    50% {
+        background-color: rgba(255, 239, 100);
+        border-radius: 100%;
+    }
+    60% {
+        background-color: rgb(216, 218, 197);
+        border-radius: 100%;
+    }
+    100% {
+        transform: scale(0);
+        background-color: rgb(180, 138, 177);
+        border-radius: 100%;
+    }
+  }
+
+ .welcome{
+    text-align: center;
+    padding:300px 0px 0px;
+    animation: fadeIn 4s;
+    opacity: 0;
+    animation-delay: 1s;
+    animation-fill-mode: forwards;
+    z-index: 3;
+ } 
+ 
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { 
+        opacity: 1;
+    }
+  }
+  

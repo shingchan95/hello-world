@@ -1,30 +1,38 @@
-import React from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
 import PostForm from '../components/PostForm';
-import PostList from '../components/PostList';
+import HomePostList from '../components/HomePostList';
+import WelcomePage from '../components/WelcomePage';
 
 import {QUERY_ME } from '../utils/queries';
-
-import Auth from '../utils/auth';
+import '../styles/home.css';
 
 const Home = () => {
-  // const { username: userParam } = useParams();
-
-  // const { loading, data } = useQuery(userParam ? QUERY_USER : QUERY_ME, {
-  //   variables: { username: userParam },
-  // });
-
   
-  const { loading, data } = useQuery(QUERY_ME);
-
+  
+  const { loading, data, refetch } = useQuery(QUERY_ME);
+  // const [postArray, setPostArray]= useState([])
+  
+  const [friendArray, setFriendArray]= useState()
   const user = data?.me || {};
+  const friendlist = user.friends
 
-  // navigate to personal profile page if username is yours
-  // if (Auth.loggedIn() && Auth.getProfile().data.username === userParam) {
-  //   return <Navigate to="/me" />;
-  // }
+  useEffect(() => {
+    handleFilter(friendlist, user);
+  }, [friendlist])
+
+  useEffect(()=>{
+    refetch()
+  },[data])
+
+  const handleFilter =(friendlist,user) =>{
+    setFriendArray(friendlist)
+    
+    if(friendlist){
+      setFriendArray(current => [...current, user])
+    }
+  }
 
   if (loading) {
     return <div>Loading...</div>;
@@ -32,31 +40,21 @@ const Home = () => {
 
   if (!user?.username) {
     return (
-      <h4>
-        You need to be logged in to see this. Use the navigation links above to
-        sign up or log in!
-      </h4>
+      <WelcomePage />
     );
   }
 
   return (
-    <div>
+    <div className='homePost'>
+      <div className='postForm'>
        <PostForm />
-      <div className="flex-row justify-center mb-3">
-        {/* <h2 className="col-12 col-md-10 bg-dark text-light p-3 mb-5">
-          Viewing {userParam ? `${user.username}'s` : 'your'} profile.
-        </h2> */}
-
-        <div className="col-12 col-md-10 mb-5">
-          <PostList
-            posts={user.posts}
-            title={`${user.username}'s posts...`}
-            showTitle={false}
-            showUsername={false}
-          />
-        </div>
-    
       </div>
+        <div>
+          <HomePostList
+            data={friendArray}
+            showTitle={false}
+           />
+        </div>
     </div>
   );
 };

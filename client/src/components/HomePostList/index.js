@@ -2,31 +2,32 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CommentForm from '../CommentForm';
 import CommentList from '../CommentList';
+import '../../styles/homepost.css';
 
-const PostList = ({
-  posts,
-  username,
+const HomePostList = ({
+  data,
 }) => {
-
-  if (!posts.length) {
-    return <h3>No Posts Yet</h3>;
+  
+  if (!data) {
+    return <h3>No Posts Yet?</h3>;
   }
 
-
   return (
-    <div>
-      {posts &&
-        posts.map((post) => (
-          <div key={post._id} className="card mb-3 pl-2">
+    <div className='homepost col-md-8'>
+      {data &&
+        data.map((users, index) => (
+          <div key={index}>
+          {users.posts.map((post, i)=> ( 
+            <div key={i} className="card mb-3">
             <h4 className="p-2 m-0">
-                <>
-                  <p style={{ fontSize: '1.5rem' }}>
-                    {username} 
-                  </p>
+                  <Link to={`/profiles/${users.username}`} >
+                    <p style={{ fontSize: '1.5rem' }}>
+                      {users.username}
+                    </p>
+                  </Link>
                   <p style={{ fontSize: '0.9rem' }}>{post.createdAt}</p>
-                </>           
             </h4>
-            <div className="p-2">
+            <div className=" p-2">
               <p style={{ fontSize: '1.8rem' }}>{post.postText}</p>
             </div>
             <CommentList comments={post.comments} />
@@ -36,9 +37,11 @@ const PostList = ({
               />
           
           </div>
+         ))}
+       </div>
         ))}
     </div>
   );
 };
 
-export default PostList;
+export default HomePostList;

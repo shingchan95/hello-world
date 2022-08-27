@@ -11,7 +11,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
-import SinglePost from './pages/SinglePost';
 import Profile from './pages/Profile';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -46,7 +45,7 @@ function App() {
       <Router>
         <div className="flex-column justify-flex-start min-100-vh">
           <Header />
-          <div className="container">
+          <div className="container background">
             <Routes>
               <Route 
                 path="/"
@@ -68,10 +67,7 @@ function App() {
                 path="/profiles/:username"
                 element={<Profile />}
               />
-              <Route 
-                path="/PostSinglePost/:postId"
-                element={<SinglePost />}
-              />
+           
             </Routes>
           </div>
           <Footer />

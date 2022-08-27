@@ -12,17 +12,18 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate('posts').populate('friends');
+        return User.findOne({ _id: context.user._id }).populate('posts').populate({path: 'friends', populate:{ path:'posts'}});
       }
       throw new AuthenticationError('You need to be logged in!');
     },
     posts: async (parent, { username }) => {
       const params = username ? { username } : {};
-      return Post.find(params).sort({ createdAt: descending });
+      return Post.find(params).sort({ createdAt: 1 });
     },
     post: async (parent, { postId }) => {
       return Post.findOne({ _id: postId });
     },
+    
   },
 
   Mutation: {
@@ -49,16 +50,19 @@ const resolvers = {
       return { token, user };
     },
 
-    addFriend: async (parent, {userId, username, email }, context) => {
+    addFriend: async (parent, {userId}, context) => {
       if (context.user) {
         const friend= await User.findByIdAndUpdate(
           { _id: context.user._id },
-          { $push: {friends: {_id: userId, username: username, email: email} } },
+          { $push: {friends: {_id: userId} } },
           { new: true }
         );
+        
+        // const friends2= User.findOne({ _id: userId }).populate('posts').populate('friends');
+        // console.log(friends2)
         const friend2= await User.findByIdAndUpdate(
           { _id: userId },
-          { $push: {friends: {_id: context.user._id, username: context.user.username, email: context.user.email} } },
+          { $push: {friends: {_id: context.user._id} } },
           { new: true }
         );
         return friend;

@@ -1,0 +1,11 @@
+.header-container{
+    display: contents;
+
+}
+
+.header-container{
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}

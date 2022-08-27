@@ -12,21 +12,9 @@ const Footer = () => {
             className="btn btn-dark mb-3"
             onClick={() => navigate(-1)}
           >
-            &larr; Go Back
+            &larr; Back
           </button>
         )}
-        <h4>
-          Made with{' '}
-          <span
-            className="emoji"
-            role="img"
-            aria-label="heart"
-            aria-hidden="false"
-          >
-            ❤️
-          </span>{' '}
-          by the Hello World team.
-        </h4>
       </div>
     </footer>
   );

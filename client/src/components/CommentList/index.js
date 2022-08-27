@@ -1,33 +1,39 @@
 import React from 'react';
+import '../../styles/comment.css'
 
-const CommentList = ({ comments = [] }) => {
+const CommentList = ({ comments = []}) => {
+
   if (!comments.length) {
-    return <h3>No Comments Yet</h3>;
+    return <div className='pl-2'><h5>No Comments Yet</h5></div>;
   }
 
   return (
     <>
-      <h3
-        className="p-5 display-inline-block"
+    <div className='pl-5'>
+      <h5
+        className="p-2 display-inline-block"
         style={{ borderBottom: '1px dotted #1a1a1a' }}
       >
-        Comments
-      </h3>
-      <div className="flex-row my-4">
+        Comments:
+      </h5>
+      <div className="flex-row">
         {comments &&
           comments.map((comment) => (
-            <div key={comment._id} className="col-12 mb-3 pb-3">
-              <div className="p-3 bg-dark text-light">
-                <h5 className="card-header">
-                  {comment.commentAuthor} commented{' '}
+            <div key={comment._id} className="col-9 comment-border">
+              <div className="p-3">
+                <p className="card-body" style={{ fontSize: '1.25rem' }} >{comment.commentText}</p>
+                <div>
                   <span style={{ fontSize: '0.825rem' }}>
-                    on {comment.createdAt}
+                    {comment.commentAuthor}
                   </span>
-                </h5>
-                <p className="card-body">{comment.commentText}</p>
+                  <span style={{ fontSize: '0.825rem' }}>
+                    {comment.createdAt}
+                  </span>
+                </div>
               </div>
             </div>
           ))}
+        </div>
       </div>
     </>
   );

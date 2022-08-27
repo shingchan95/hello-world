@@ -9,7 +9,6 @@ import Auth from '../../utils/auth';
 const CommentForm = ({ postId }) => {
   const [commentText, setCommentText] = useState('');
   const [characterCount, setCharacterCount] = useState(0);
-
   const [addComment, { error }] = useMutation(ADD_COMMENT);
 
   const handleFormSubmit = async (event) => {
@@ -29,7 +28,6 @@ const CommentForm = ({ postId }) => {
       console.error(err);
     }
   };
-
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -37,22 +35,14 @@ const CommentForm = ({ postId }) => {
       setCommentText(value);
       setCharacterCount(value.length);
     }
+    console.log(commentText)
   };
 
   return (
     <div>
-      <h4>What are your thoughts on this post?</h4>
 
       {Auth.loggedIn() ? (
         <>
-          <p
-            className={`m-0 ${
-              characterCount === 280 || error ? 'text-danger' : ''
-            }`}
-          >
-            Character Count: {characterCount}/280
-            {error && <span className="ml-2">{error.message}</span>}
-          </p>
           <form
             className="flex-row justify-center justify-space-between-md align-center"
             onSubmit={handleFormSubmit}
@@ -60,7 +50,7 @@ const CommentForm = ({ postId }) => {
             <div className="col-12 col-lg-9">
               <textarea
                 name="commentText"
-                placeholder="Add your comment..."
+                placeholder="Add your comment"
                 value={commentText}
                 className="form-input w-100"
                 style={{ lineHeight: '1.5', resize: 'vertical' }}

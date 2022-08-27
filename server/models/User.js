@@ -25,7 +25,12 @@ const userSchema = new Schema({
       ref: 'Post',
     },
   ],
-  friends: [this],
+  friends: [   
+     {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+],
 
 });
 
