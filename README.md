@@ -81,14 +81,14 @@ THEN I am logged out of the site and navigate back to the home page
 
 
 ## Screenshots
-![alt Homepage](/homepage-screenshot.JPG)
-![alt login](/login-screenshot.JPG)
-![alt signup](/signup-screenshot.JPG)
-![alt userhomepage](/userhomepage-screenshot.JPG)
-![alt profile](/profile-screenshot.JPG)
-![alt searchbar](/searchbar-screenshot.JPG)
-![alt connect user](/connectuser-screenshot.JPG)
-![alt connected user](/connected-screenshot.JPG)
+![alt Homepage](/Screenshot/homepage-screenshot.JPG)
+![alt login](/Screenshot/login-screenshot.JPG)
+![alt signup](/Screenshot/signup-screenshot.JPG)
+![alt userhomepage](/Screenshot/userhomepage-screenshot.JPG)
+![alt profile](/Screenshot/profile-screenshot.JPG)
+![alt searchbar](/Screenshot/searchbar-screenshot.JPG)
+![alt connect user](/Screenshot/connectuser-screenshot.JPG)
+![alt connected user](/Screenshot/connected-screenshot.JPG)
 
 ## Deployment
 
